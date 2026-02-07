@@ -1,0 +1,9 @@
+:root {
+    color-scheme: light dark;
+
+    --primary-text-color: #ffffff;
+
+    --primary-color: #e9abec;
+    --secondary-color: #ecabcf;
+    --tertiary-color: #c9abec;
+}

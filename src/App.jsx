@@ -1,7 +1,7 @@
-import { useState } from 'react'
+import { useState } from "react";
 import HomeView from "./views/Home.jsx";
 import AgreedView from "./views/Agreed.jsx";
-import './App.css'
+import "./App.css";
 
 function App() {
   const [agreed, setAgreed] = useState(false)
@@ -13,4 +13,4 @@ function App() {
   )
 }
 
-export default App
+export default App;
