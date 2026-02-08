@@ -150,7 +150,8 @@ export default function homeView(props) {
                     <button
                         ref={noButtonRef}
                         className="julia-btn julia-medium-text no-btn"
-                        onClick={moveToRandomPosition}
+                        onMouseDown={moveToRandomPosition}
+                        onTouchStart={moveToRandomPosition}
                         style={noButtonPos ? {
                             position: "fixed",
                             left: 0,
