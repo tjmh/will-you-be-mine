@@ -23,7 +23,7 @@ export default function PreloadedImage(props) {
         // Cleanup function
         return () => {
             // Abort loading if component unmounts before image loads
-            img.src = '';
+            img.src = "";
             img.onload = null;
             img.onerror = null;
         };

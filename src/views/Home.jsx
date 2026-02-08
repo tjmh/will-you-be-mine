@@ -117,9 +117,9 @@ export default function homeView(props) {
             }
         };
 
-        window.addEventListener('mousemove', handleMouseMove);
+        window.addEventListener("mousemove", handleMouseMove);
         return () => {
-            window.removeEventListener('mousemove', handleMouseMove);
+            window.removeEventListener("mousemove", handleMouseMove);
             if (rafId !== null) {
                 cancelAnimationFrame(rafId);
             }
@@ -132,15 +132,15 @@ export default function homeView(props) {
             resetToInitialPosition();
         };
 
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
     }, []);
 
     return (
         <div className="julia-view home-view">
             <h1>Hello Julia Zhu</h1>
             <PreloadedImage imageUrl={millieUrl} />
-            <p className="julia-medium-text">Will you be my valentine ? 🌹</p>
+            <p className="julia-medium-text">Will you be my Valentine ? 🌹</p>
             <p className="julia-small-text">From Michael not Millie</p>
             <div className="button-container">
                 <div className="button-cell">
@@ -152,14 +152,14 @@ export default function homeView(props) {
                         className="julia-btn julia-medium-text no-btn"
                         onClick={moveToRandomPosition}
                         style={noButtonPos ? {
-                            position: 'fixed',
+                            position: "fixed",
                             left: 0,
                             top: 0,
                             transform: `translate(${noButtonPos.x}px, ${noButtonPos.y}px)`,
-                            transition: isInitiallyPositioned ? 'transform 0.2s ease-out' : 'none',
-                            willChange: 'transform'
+                            transition: isInitiallyPositioned ? "transform 0.2s ease-out" : "none",
+                            willChange: "transform"
                         } : {
-                            visibility: 'hidden'
+                            visibility: "hidden"
                         }}
                     >
                         No 😔
