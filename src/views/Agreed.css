@@ -14,6 +14,28 @@
     margin: 8px;
 }
 
+.agreed-view img,
+.agreed-view .embedded-map {
+    height: 175px;
+}
+
+.agreed-view .preview-container {
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+.agreed-view img {
+    width: 262.5px;
+    border-top-left-radius: 16px;
+    border-bottom-left-radius: 16px;
+}
+
+.agreed-view .embedded-map {
+    width: 300px;
+    border-top-right-radius: 16px;
+    border-bottom-right-radius: 16px;
+}
+
 .agreed-view iframe {
     margin-top: 10px;
 }
