@@ -9,14 +9,6 @@ export default function PreloadedImage(props) {
         // Create a new Image object to preload
         const img = new Image();
 
-        // Optional: handle load/error events
-        img.onload = () => {
-            console.log("Image preloaded:", imageUrl);
-        };
-        img.onerror = () => {
-            console.error("Failed to preload image:", imageUrl);
-        };
-
         // Setting src triggers the browser to load/cache the image
         img.src = imageUrl;
 
