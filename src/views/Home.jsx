@@ -10,6 +10,57 @@ export default function homeView(props) {
     const [noButtonPos, setNoButtonPos] = useState(null);
     const [isInitiallyPositioned, setIsInitiallyPositioned] = useState(false);
     const noButtonRef = useRef(null);
+    const yesButtonRef = useRef(null);
+
+    // Check if two rectangles overlap
+    const checkOverlap = (rect1, rect2) => {
+        return !(rect1.right < rect2.left ||
+                 rect1.left > rect2.right ||
+                 rect1.bottom < rect2.top ||
+                 rect1.top > rect2.bottom);
+    };
+
+    // Get a safe position that doesn't overlap the Yes button
+    const getSafePosition = (x, y, noButtonRect) => {
+        if (!yesButtonRef.current) return { x, y };
+
+        const yesRect = yesButtonRef.current.getBoundingClientRect();
+        const potentialNoRect = {
+            left: x,
+            top: y,
+            right: x + noButtonRect.width,
+            bottom: y + noButtonRect.height
+        };
+
+        // If no overlap, position is safe
+        if (!checkOverlap(potentialNoRect, yesRect)) {
+            return { x, y };
+        }
+
+        // If overlap detected, try to move away from Yes button
+        const padding = 20;
+        const minDistance = 20; // Minimum gap between buttons
+
+        // Calculate center of Yes button
+        const yesCenterX = yesRect.left + yesRect.width / 2;
+        const yesCenterY = yesRect.top + yesRect.height / 2;
+        const noCenterX = x + noButtonRect.width / 2;
+        const noCenterY = y + noButtonRect.height / 2;
+
+        // Calculate angle from Yes to No button
+        const angle = Math.atan2(noCenterY - yesCenterY, noCenterX - yesCenterX);
+
+        // Move No button away from Yes button
+        const distance = Math.max(yesRect.width, yesRect.height) + minDistance;
+        let newX = yesCenterX + Math.cos(angle) * distance - noButtonRect.width / 2;
+        let newY = yesCenterY + Math.sin(angle) * distance - noButtonRect.height / 2;
+
+        // Keep within viewport bounds
+        newX = Math.max(padding, Math.min(newX, window.innerWidth - noButtonRect.width - padding));
+        newY = Math.max(padding, Math.min(newY, window.innerHeight - noButtonRect.height - padding));
+
+        return { x: newX, y: newY };
+    };
 
     const resetToInitialPosition = (isFirstTime = false) => {
         if (!noButtonRef.current) return;
@@ -58,11 +109,34 @@ export default function homeView(props) {
         const buttonRect = noButtonRef.current.getBoundingClientRect();
         const padding = 20;
 
-        // Generate random position within viewport bounds
-        const randomX = Math.random() * (window.innerWidth - buttonRect.width - padding * 2) + padding;
-        const randomY = Math.random() * (window.innerHeight - buttonRect.height - padding * 2) + padding;
+        // Try multiple times to find a non-overlapping position
+        let attempts = 0;
+        let safePos = null;
 
-        setNoButtonPos({ x: randomX, y: randomY });
+        while (attempts < 10) {
+            const randomX = Math.random() * (window.innerWidth - buttonRect.width - padding * 2) + padding;
+            const randomY = Math.random() * (window.innerHeight - buttonRect.height - padding * 2) + padding;
+
+            safePos = getSafePosition(randomX, randomY, buttonRect);
+
+            // Check if the safe position is actually safe
+            if (!yesButtonRef.current) break;
+
+            const yesRect = yesButtonRef.current.getBoundingClientRect();
+            const finalRect = {
+                left: safePos.x,
+                top: safePos.y,
+                right: safePos.x + buttonRect.width,
+                bottom: safePos.y + buttonRect.height
+            };
+
+            if (!checkOverlap(finalRect, yesRect)) break;
+            attempts++;
+        }
+
+        if (safePos) {
+            setNoButtonPos(safePos);
+        }
     };
 
     useEffect(() => {
@@ -102,7 +176,9 @@ export default function homeView(props) {
                 newX = Math.max(padding, Math.min(newX, window.innerWidth - buttonRect.width - padding));
                 newY = Math.max(padding, Math.min(newY, window.innerHeight - buttonRect.height - padding));
 
-                setNoButtonPos({ x: newX, y: newY });
+                // Make sure the new position doesn't overlap the Yes button
+                const safePos = getSafePosition(newX, newY, buttonRect);
+                setNoButtonPos(safePos);
             }
 
             rafId = null;
@@ -144,7 +220,7 @@ export default function homeView(props) {
             <p className="julia-small-text">From Michael not Millie</p>
             <div className="button-container">
                 <div className="button-cell">
-                    <button className="julia-btn julia-medium-text yes-btn" onClick={() => setAgreed(true)}>Yes 😊</button>
+                    <button ref={yesButtonRef} className="julia-btn julia-medium-text yes-btn" onClick={() => setAgreed(true)}>Yes 😊</button>
                 </div>
                 <div className="button-cell">
                     <button
