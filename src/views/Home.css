@@ -27,8 +27,8 @@
 }
 
 .home-view img {
-    width: 40vh;
-    height: 40vh;
+    width: calc(min(50vw, 40vh));
+    height: calc(min(50vw, 40vh));
 }
 
 .home-view p {
