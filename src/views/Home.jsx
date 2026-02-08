@@ -1,4 +1,9 @@
 import { useState, useRef, useEffect } from "react";
+import PreloadedImage from "../components/PreloadedImage/PreloadedImage.jsx";
+
+import millieUrl from "../assets/millie.png";
+
+import "./Home.css";
 
 export default function homeView(props) {
     const { setAgreed } = props;
@@ -134,15 +139,17 @@ export default function homeView(props) {
     return (
         <div className="julia-view home-view">
             <h1>Hello Julia Zhu</h1>
-            <p>Will you be my valentine?</p>
+            <PreloadedImage imageUrl={millieUrl} />
+            <p className="julia-medium-text">Will you be my valentine ? 🌹</p>
+            <p className="julia-small-text">From Michael not Millie</p>
             <div className="button-container">
                 <div className="button-cell">
-                    <button className="julia-btn yes-btn" onClick={() => setAgreed(true)}>Yes 😊</button>
+                    <button className="julia-btn julia-medium-text yes-btn" onClick={() => setAgreed(true)}>Yes 😊</button>
                 </div>
                 <div className="button-cell">
                     <button
                         ref={noButtonRef}
-                        className="julia-btn no-btn"
+                        className="julia-btn julia-medium-text no-btn"
                         onClick={moveToRandomPosition}
                         style={noButtonPos ? {
                             position: 'fixed',

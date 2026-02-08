@@ -1,0 +1,36 @@
+.home-view {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  color: var(--primary-text-color);
+}
+
+.home-view .button-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.home-view .button-container .button-cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 100px;
+  height: 50px;
+
+  margin: 8px;
+}
+
+.home-view img {
+    width: 40vh;
+    height: 40vh;
+}
+
+.home-view p {
+    margin: 5px;
+}
