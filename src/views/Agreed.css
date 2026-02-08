@@ -16,7 +16,7 @@
 
 .agreed-view img,
 .agreed-view .embedded-map {
-    height: calc(min(20vw, 40vh));
+    height: calc(min(25vw, 40vh));
 }
 
 .agreed-view .preview-container {
@@ -25,13 +25,13 @@
 }
 
 .agreed-view img {
-    width: calc(min(20vw, 40vh) * 1.5);
+    width: calc(min(25vw, 40vh) * 1.5);
     border-top-left-radius: 16px;
     border-bottom-left-radius: 16px;
 }
 
 .agreed-view .embedded-map {
-    width: calc(min(20vw, 40vh) * 2);
+    width: calc(min(25vw, 40vh) * 2);
     border-top-right-radius: 16px;
     border-bottom-right-radius: 16px;
 }
