@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview",
+    "dev": "vite --config ./tools/vite.config.local.js",
+    "build": "vite build --config ./tools/vite.config.js",
+    "preview": "vite preview --config ./tools/vite.config.local.js",
     "lint": "eslint ."
   },
   "repository": {

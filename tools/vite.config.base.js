@@ -1,9 +1,7 @@
-import { defineConfig } from "vite"
 import react from "@vitejs/plugin-react";
 import { createRollupLicensePlugin } from "rollup-license-plugin";
 
-// https://vite.dev/config/
-export default defineConfig({
+export default {
   plugins: [
     react(),
     createRollupLicensePlugin({
@@ -21,5 +19,5 @@ export default defineConfig({
       }
     }),
   ],
-  base: "/will-you-be-mine/" 
-})
+  base: "/will-you-be-mine/",
+};

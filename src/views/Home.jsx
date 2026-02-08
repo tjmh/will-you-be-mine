@@ -18,7 +18,9 @@ export default function homeView(props) {
             });
             // Enable transitions after a brief delay to ensure position is set
             requestAnimationFrame(() => {
-                setIsInitiallyPositioned(true);
+                requestAnimationFrame(() => {
+                    setIsInitiallyPositioned(true);
+                });
             });
         } else {
             // On resize, temporarily remove fixed positioning to get natural position
@@ -59,9 +61,16 @@ export default function homeView(props) {
     };
 
     useEffect(() => {
-        const handleMouseMove = (e) => {
-            if (!noButtonRef.current || !noButtonPos) return;
+        let rafId = null;
+        let lastMouseEvent = null;
 
+        const updateButtonPosition = () => {
+            if (!lastMouseEvent || !noButtonRef.current || !noButtonPos) {
+                rafId = null;
+                return;
+            }
+
+            const e = lastMouseEvent;
             const buttonRect = noButtonRef.current.getBoundingClientRect();
             const buttonCenterX = buttonRect.left + buttonRect.width / 2;
             const buttonCenterY = buttonRect.top + buttonRect.height / 2;
@@ -90,10 +99,26 @@ export default function homeView(props) {
 
                 setNoButtonPos({ x: newX, y: newY });
             }
+
+            rafId = null;
+        };
+
+        const handleMouseMove = (e) => {
+            lastMouseEvent = e;
+
+            // Only schedule a new frame if one isn't already scheduled
+            if (rafId === null) {
+                rafId = requestAnimationFrame(updateButtonPosition);
+            }
         };
 
         window.addEventListener('mousemove', handleMouseMove);
-        return () => window.removeEventListener('mousemove', handleMouseMove);
+        return () => {
+            window.removeEventListener('mousemove', handleMouseMove);
+            if (rafId !== null) {
+                cancelAnimationFrame(rafId);
+            }
+        };
     }, [noButtonPos]);
 
     // Handle window resize - reset to initial position
@@ -107,12 +132,12 @@ export default function homeView(props) {
     }, []);
 
     return (
-        <div className="home-view">
+        <div className="julia-view home-view">
             <h1>Hello Julia Zhu</h1>
             <p>Will you be my valentine?</p>
             <div className="button-container">
                 <div className="button-cell">
-                    <button className="julia-btn yes-btn" onClick={() => setAgreed(true)}>Yes</button>
+                    <button className="julia-btn yes-btn" onClick={() => setAgreed(true)}>Yes 😊</button>
                 </div>
                 <div className="button-cell">
                     <button
@@ -130,7 +155,7 @@ export default function homeView(props) {
                             visibility: 'hidden'
                         }}
                     >
-                        No
+                        No 😔
                     </button>
                 </div>
             </div>

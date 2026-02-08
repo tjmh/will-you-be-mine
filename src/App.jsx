@@ -4,7 +4,7 @@ import AgreedView from "./views/Agreed.jsx";
 import "./App.css";
 
 function App() {
-  const [agreed, setAgreed] = useState(false)
+  const [agreed, setAgreed] = useState(false);
 
   return (
     <>
