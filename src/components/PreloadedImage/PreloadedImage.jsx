@@ -22,6 +22,6 @@ export default function PreloadedImage(props) {
     }, [imageUrl]);
 
     return (
-        <img src={imageUrl} alt="Will you be my Valentine?" />
+        <img src={imageUrl} alt="" />
     );
 }
